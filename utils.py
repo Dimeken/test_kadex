@@ -42,6 +42,7 @@ def truncate_table(conn, tablename, to_commit=True):
 def get_latest_prices(url):
     resp = requests.get(url)
     if resp.status_code != 200:
+        print(f'Error status code: {resp.status_code}')
         return None
 
     prices = resp.json()
@@ -56,5 +57,8 @@ def insert(conn, data, tablename, to_commit=True):
         insert into {tablename} (symbol, price) 
         values (?,?);
     """
-    cursor.executemany(query, data)
-    conn.commit()
+    try:
+        cursor.executemany(query, data)
+        conn.commit()
+    except Exception as e:
+        print(f'Error while inserting: {str(e)}')
