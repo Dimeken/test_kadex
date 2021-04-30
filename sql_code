@@ -1,0 +1,5 @@
+
+create table prices(
+	symbol varchar(20),
+	price decimal(17, 8)
+)
