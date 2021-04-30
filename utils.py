@@ -59,6 +59,8 @@ def insert(conn, data, tablename, to_commit=True):
     """
     try:
         cursor.executemany(query, data)
-        conn.commit()
     except Exception as e:
         print(f'Error while inserting: {str(e)}')
+    else:
+        if to_commit:
+            conn.commit()
